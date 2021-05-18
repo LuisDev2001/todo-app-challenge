@@ -1,0 +1,42 @@
+.wrapper {
+  padding: 0 13px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+//Container results component serach
+.result {
+  width: 100%;
+  max-height: calc(340px - 50px);
+  overflow: hidden auto;
+  &.is-active {
+    animation-name: fade;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+  }
+  @media screen and (min-width: 992px) {
+    max-width: 362px;
+    margin: 35px 0 0;
+    width: 100%;
+  }
+  @media screen and (min-width: 1200px) {
+    max-width: 472px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 2rem 0;
+  width: 100%;
+  height: auto;
+  @media screen and (min-width: 768px) {
+    gap: 30px 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (min-width: 992px) {
+    gap: 50px 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
