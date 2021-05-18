@@ -5,4 +5,6 @@
   <router-view />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import "~@/assets/sass/_base.scss";
+</style>
