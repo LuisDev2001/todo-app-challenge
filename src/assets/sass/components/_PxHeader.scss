@@ -1,0 +1,47 @@
+.header {
+  width: 100%;
+  height: 60px;
+  padding: 0 15px;
+  .menu {
+    border-bottom: 1px solid #bdbdbd;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    &__item,
+    &__list,
+    &__link {
+      display: inherit;
+      justify-content: space-around;
+      align-items: inherit;
+      width: inherit;
+      height: inherit;
+    }
+    &__link {
+      font-size: 14px;
+      text-decoration: none;
+      color: #333333;
+      width: 89px;
+      font-family: "Montserrat-SemiBold";
+      position: relative;
+      &::before {
+        content: "";
+        width: 100%;
+        height: 4px;
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        background: #2f80ed;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        opacity: 0;
+        transition: 0.3s ease all;
+      }
+      &.router-link-active {
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
