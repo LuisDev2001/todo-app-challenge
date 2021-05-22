@@ -1,0 +1,8 @@
+.result-todo {
+  height: 300px;
+  overflow: auto;
+  &__list {
+    width: 100%;
+    height: auto;
+  }
+}

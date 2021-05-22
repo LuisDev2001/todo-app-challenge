@@ -16,7 +16,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "active-task" */ "../views/ActiveTask.vue"),
+      import(/* webpackChunkName: "ActiveTask" */ "../views/ActiveTask.vue"),
   },
   {
     path: "/completed-task",
@@ -26,7 +26,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "completed-task" */ "../views/CompletedTask.vue"
+        /* webpackChunkName: "CompletedTask" */ "../views/CompletedTask.vue"
       ),
   },
 ];
