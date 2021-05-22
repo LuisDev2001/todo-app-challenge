@@ -96,7 +96,7 @@ video {
 }
 
 body {
-  font-family: "Mulish-Regular";
+  font-family: "Montserrat-Regular";
   font-size: 16px;
   color: #333333;
 }
@@ -452,4 +452,14 @@ textarea {
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
+}
+
+// Title principal
+.main-title {
+  font-family: "Raleway-Bold";
+  font-size: 36px;
+  text-align: center;
+  width: 100%;
+  padding: 0 15px;
+  margin: 32px 0 50px 0;
 }
