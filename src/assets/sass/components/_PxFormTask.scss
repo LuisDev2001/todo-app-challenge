@@ -1,0 +1,48 @@
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 0 0 32px 0;
+  &-group {
+    width: 25%;
+    &.input {
+      width: 70%;
+    }
+
+    input[type="text"],
+    button {
+      width: 100%;
+      height: 56px;
+      display: block;
+      border-radius: 12px;
+      border: 0;
+      padding: 0;
+    }
+    input[type="text"] {
+      padding: 20px 12px;
+      border: 1px solid #bdbdbd;
+      font-size: 15px;
+      font-family: "Montserrat-Regular";
+      &::placeholder {
+        font-family: "Montserrat-Regular";
+        font-size: 14px;
+        color: #828282;
+      }
+    }
+    button {
+      border: 1px solid #2f80ed;
+      background: #2f80ed;
+      color: #ffffff;
+      font-family: "Montserrat-SemiBold";
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s ease all;
+      &:hover {
+        background: #ffffff;
+        color: #2f80ed;
+      }
+    }
+  }
+}
