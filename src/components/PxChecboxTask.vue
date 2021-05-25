@@ -1,11 +1,6 @@
 <template>
   <div class="checkbox">
-    <input
-      type="checkbox"
-      v-model="checkBoxState"
-      @change="$emit('update:checkBoxState', $event.target.checked)"
-    />
-    {{ checkBoxState }}
+    <input type="checkbox" v-model="checkBoxState" />
     <label>
       <font-awesome-icon icon="check" />
     </label>
@@ -33,8 +28,14 @@ export default {
     FontAwesomeIcon,
   },
   props: {
-    checkBoxState: Boolean,
     taskText: String,
+  },
+  setup() {
+    const checkBoxState = ref(false);
+
+    return {
+      checkBoxState,
+    };
   },
 };
 </script>
