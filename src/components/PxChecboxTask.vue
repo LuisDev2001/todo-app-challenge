@@ -21,7 +21,6 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(faCheck);
 
-import { ref } from "vue";
 export default {
   name: "PxChecboxTask",
   components: {
@@ -29,13 +28,7 @@ export default {
   },
   props: {
     taskText: String,
-  },
-  setup() {
-    const checkBoxState = ref(false);
-
-    return {
-      checkBoxState,
-    };
+    checkBoxState: Boolean,
   },
 };
 </script>
