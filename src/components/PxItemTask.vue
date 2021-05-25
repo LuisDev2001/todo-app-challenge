@@ -1,56 +1,22 @@
 <template>
   <li class="result-todo__item" v-for="(item, index) in itemsTodo" :key="index">
-    <div class="checkbox">
-      <input type="checkbox" v-model="checked" ref="jsCheckbox" />
-      <label>
-        <font-awesome-icon icon="check" />
-      </label>
-    </div>
-    <span
-      :class="{
-        'result-todo__text': true,
-        'is-checked': checked,
-      }"
-      v-text="item.task"
-    >
-    </span>
+    <PxChecboxTask :taskText="item.task" />
   </li>
 </template>
 
 <script>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faCheck);
+import { reactive, ref, toRefs } from "vue";
 
-import { reactive, toRefs } from "vue";
-
+import PxChecboxTask from "@/components/PxChecboxTask";
 export default {
   name: "PxItemTask",
   components: {
-    FontAwesomeIcon,
+    PxChecboxTask,
   },
   props: {
     itemsTodo: Object,
   },
-  setup() {
-    const checkBoxState = reactive({
-      checked: false,
-    });
-
-    const check = (event) => {
-      // if (event.target.checked) {
-      //   checkBoxState.checked = true;
-      // } else {
-      //   checkBoxState.checked = false;
-      // }
-    };
-
-    return {
-      check,
-      ...toRefs(checkBoxState),
-    };
-  },
+  setup() {},
 };
 </script>
 
