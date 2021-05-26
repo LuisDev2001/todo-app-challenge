@@ -8,7 +8,7 @@
 
 <script>
 import PxItemTask from "@/components/PxItemTask";
-import { computed, onMounted, reactive, toRefs } from "vue";
+import { onMounted, ref } from "vue";
 
 export default {
   name: "PxContainerResult",
@@ -16,32 +16,13 @@ export default {
     PxItemTask,
   },
   props: {
-    itemsTodo: Object,
+    itemsTodo: Array,
   },
-  setup() {
-    const dataTodoListState = reactive({
-      dataTask: [],
-    });
-
-    const getAllTask = async () => {
-      try {
-        const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
-        const getData = await fetch(API);
-        const response = await getData.json();
-        for (const task of response) {
-          dataTodoListState.dataTask.push(task);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    onMounted(async () => {
-      await getAllTask();
-    });
+  setup(props) {
+    const dataTask = props.itemsTodo;
 
     return {
-      ...toRefs(dataTodoListState),
+      dataTask,
     };
   },
 };
