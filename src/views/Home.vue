@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, toRefs } from "vue";
+import { onMounted, reactive, toRefs } from "vue";
 
 // @ is an alias to /src
 import PxContainerResult from "@/components/PxContainerResult";
