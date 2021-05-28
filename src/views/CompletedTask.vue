@@ -1,6 +1,6 @@
 <template>
   <section class="completed">
-    <PxContainerResult :itemsTodo="dataTodoListState" />
+    <PxContainerResult />
   </section>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <section class="result-todo">
     <ul class="result-todo__list">
-      <PxItemTask :itemsTodo="dataTask" />
+      <PxItemTask />
     </ul>
   </section>
 </template>
