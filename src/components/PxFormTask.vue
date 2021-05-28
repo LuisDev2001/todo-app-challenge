@@ -18,28 +18,44 @@
 import { ref } from "vue";
 export default {
   name: "PxFormTask",
-  setup() {
-    let task = ref("");
 
+  setup(props) {
+    let task = ref("");
+    let message = ref("");
     const submitTask = async () => {
-      try {
-        const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
-        const config = {
-          method: "POST",
-          body: JSON.stringify({
-            task: task.value,
-            status: false,
-          }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        };
-        const response = await fetch(API, config);
-        const data = await response.json();
-        task.value = "";
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+      if (task.value != "") {
+        try {
+          const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
+          const config = {
+            method: "POST",
+            body: JSON.stringify({
+              task: task.value,
+              status: false,
+            }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          };
+
+          const response = await fetch(API, config);
+
+          // Validate status code
+          if (!response.ok) {
+            if (response.status == 404) {
+              message.value = "Error de conexion con el servicio";
+              console.error(message.value);
+            }
+          }
+          console.log(response.status);
+          const data = await response.json();
+          task.value = "";
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        message.value = "Ingrese una tarea, porfavor";
+        console.error(message.value);
       }
     };
 
