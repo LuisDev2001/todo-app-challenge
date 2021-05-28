@@ -8,7 +8,7 @@
 
 <script>
 import PxItemTask from "@/components/PxItemTask";
-import { onMounted, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 
 export default {
   name: "PxContainerResult",
@@ -19,7 +19,7 @@ export default {
     itemsTodo: Array,
   },
   setup(props) {
-    const dataTask = props.itemsTodo;
+    const dataTask = inject("dataTodoListState");
 
     return {
       dataTask,

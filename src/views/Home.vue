@@ -1,24 +1,27 @@
 <template>
   <div class="all">
-    <PxContainerResult :itemsTodo="dataTask" />
+    <PxFormTask />
+    <PxContainerResult :itemsTodo="dataTodoListState" />
   </div>
 </template>
 
 <script>
-import { onMounted, reactive, toRefs } from "vue";
+import { onMounted, provide, ref, watchEffect } from "vue";
 
 // @ is an alias to /src
 import PxContainerResult from "@/components/PxContainerResult";
+import PxFormTask from "@/components/PxFormTask";
 
 export default {
   name: "Home",
   components: {
     PxContainerResult,
+    PxFormTask,
   },
   setup() {
-    const dataTodoListState = reactive({
-      dataTask: [],
-    });
+    const dataTodoListState = ref([]);
+
+    provide("dataTodoListState", dataTodoListState);
 
     const getAllTask = async () => {
       try {
@@ -26,19 +29,22 @@ export default {
         const getData = await fetch(API);
         const response = await getData.json();
         for (const task of response) {
-          dataTodoListState.dataTask.push(task);
+          dataTodoListState.value.push(task);
         }
       } catch (error) {
         console.log(error);
       }
     };
 
-    onMounted(async () => {
-      await getAllTask();
+    watchEffect(() => {
+      console.log(dataTodoListState.value.length);
+      console.log(dataTodoListState.value);
     });
 
+    onMounted(async () => await getAllTask());
+
     return {
-      ...toRefs(dataTodoListState),
+      dataTodoListState,
     };
   },
 };

@@ -46,10 +46,8 @@ export default {
               console.error(message.value);
             }
           }
-          console.log(response.status);
           const data = await response.json();
           task.value = "";
-          console.log(data);
         } catch (error) {
           console.error(error);
         }

@@ -1,22 +1,26 @@
 <template>
   <section class="active">
-    <PxContainerResult :itemsTodo="dataActiveTask" />
+    <PxFormTask />
+
+    <PxContainerResult :itemsTodo="dataTodoListState" />
   </section>
 </template>
 
 <script>
+import { onMounted, ref, provide } from "vue";
+
 import PxContainerResult from "@/components/PxContainerResult";
-import { reactive, onMounted, toRefs } from "vue";
+import PxFormTask from "@/components/PxFormTask";
 
 export default {
   name: "ActiveTask",
   components: {
     PxContainerResult,
+    PxFormTask,
   },
   setup() {
-    const dataTodoListActiveState = reactive({
-      dataActiveTask: [],
-    });
+    const dataTodoListState = ref([]);
+    provide("dataTodoListState", dataTodoListState);
 
     const getAllActiveTask = async () => {
       try {
@@ -25,7 +29,7 @@ export default {
         const response = await getData.json();
         for (const task of response) {
           if (!task.status) {
-            dataTodoListActiveState.dataActiveTask.push(task);
+            dataTodoListState.value.push(task);
           }
         }
       } catch (error) {
@@ -33,12 +37,10 @@ export default {
       }
     };
 
-    onMounted(async () => {
-      await getAllActiveTask();
-    });
+    onMounted(async () => await getAllActiveTask());
 
     return {
-      ...toRefs(dataTodoListActiveState),
+      dataTodoListState,
     };
   },
 };

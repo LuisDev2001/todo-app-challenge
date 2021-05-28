@@ -1,18 +1,15 @@
 <template>
   <h1 class="main-title">#todo</h1>
   <PxHeader />
-  <PxFormTask />
   <router-view />
 </template>
 
 <script>
 import PxHeader from "@/components/PxHeader";
-import PxFormTask from "@/components/PxFormTask";
 
 export default {
   components: {
     PxHeader,
-    PxFormTask,
   },
 };
 </script>
