@@ -15,13 +15,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { inject, ref } from "vue";
 export default {
   name: "PxFormTask",
 
   setup(props) {
     let task = ref("");
     let message = ref("");
+
+    const dataTodo = inject("dataTodoListState");
+
     const submitTask = async () => {
       if (task.value != "") {
         try {
@@ -47,6 +50,7 @@ export default {
             }
           }
           const data = await response.json();
+          dataTodo.value.push(data);
           task.value = "";
         } catch (error) {
           console.error(error);

@@ -2,7 +2,7 @@
   <section class="active">
     <PxFormTask />
 
-    <PxContainerResult :itemsTodo="dataTodoListState" />
+    <PxContainerResult />
   </section>
 </template>
 

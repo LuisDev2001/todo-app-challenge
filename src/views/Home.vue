@@ -1,7 +1,7 @@
 <template>
   <div class="all">
     <PxFormTask />
-    <PxContainerResult :itemsTodo="dataTodoListState" />
+    <PxContainerResult />
   </div>
 </template>
 
