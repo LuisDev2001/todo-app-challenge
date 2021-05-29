@@ -12,7 +12,6 @@ export default {
   components: {
     PxChecboxTask,
   },
-
   setup() {
     const dataTask = inject("dataTodoListState");
 

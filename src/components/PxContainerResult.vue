@@ -1,24 +1,25 @@
 <template>
   <section class="result-todo">
     <ul class="result-todo__list">
-      <PxItemTask />
+      <PxEmptyTask v-if="dataTask.length == 0" />
+      <PxItemTask v-else />
     </ul>
   </section>
 </template>
 
 <script>
-import PxItemTask from "@/components/PxItemTask";
 import { inject, onMounted, ref } from "vue";
+
+import PxItemTask from "@/components/PxItemTask";
+import PxEmptyTask from "@/components/PxEmptyTask";
 
 export default {
   name: "PxContainerResult",
   components: {
     PxItemTask,
+    PxEmptyTask,
   },
-  props: {
-    itemsTodo: Array,
-  },
-  setup(props) {
+  setup() {
     const dataTask = inject("dataTodoListState");
 
     return {
