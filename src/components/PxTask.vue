@@ -1,18 +1,20 @@
 <template>
-  <div class="checkbox">
-    <input type="checkbox" v-model="checkBoxState" />
-    <label>
-      <font-awesome-icon icon="check" />
-    </label>
+  <div class="task">
+    <div class="checkbox">
+      <input type="checkbox" v-model="checkBoxState" />
+      <label>
+        <font-awesome-icon icon="check" />
+      </label>
+    </div>
+    <span
+      :class="{
+        'result-todo__text': true,
+        'is-checked': checkBoxState,
+      }"
+      v-text="taskText"
+    >
+    </span>
   </div>
-  <span
-    :class="{
-      'result-todo__text': true,
-      'is-checked': checkBoxState,
-    }"
-    v-text="taskText"
-  >
-  </span>
 </template>
 
 <script>
@@ -22,7 +24,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(faCheck);
 
 export default {
-  name: "PxChecboxTask",
+  name: "PxTask",
   components: {
     FontAwesomeIcon,
   },
@@ -35,6 +37,14 @@ export default {
 
 <style lang="scss" scoped>
 .result-todo {
+  .task {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: "Montserrat-Medium";
+    font-size: 18px;
+    color: #000000;
+  }
   &__text {
     &.is-checked {
       text-decoration: line-through;

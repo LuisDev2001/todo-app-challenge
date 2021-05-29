@@ -1,6 +1,7 @@
 <template>
   <section class="completed">
     <PxContainerResult />
+    <PxBtnDeleteCompletedTask />
   </section>
 </template>
 
@@ -8,11 +9,13 @@
 import { onMounted, provide, ref } from "vue";
 
 import PxContainerResult from "@/components/PxContainerResult";
+import PxBtnDeleteCompletedTask from "@/components/PxBtnDeleteCompletedTask";
 
 export default {
   name: "CompletedTask",
   components: {
     PxContainerResult,
+    PxBtnDeleteCompletedTask,
   },
   setup() {
     const dataTodoListState = ref([]);
