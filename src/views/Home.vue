@@ -37,8 +37,8 @@ export default {
     };
 
     watchEffect(() => {
-      console.log(dataTodoListState.value.length);
-      console.log(dataTodoListState.value);
+      // console.log(dataTodoListState.value.length);
+      // console.log(dataTodoListState.value);
     });
 
     onMounted(async () => await getAllTask());

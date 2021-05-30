@@ -1,6 +1,10 @@
 <template>
   <li class="result-todo__item" v-for="(item, index) in dataTask" :key="index">
-    <PxTask :taskText="item.task" :checkBoxState="item.status" />
+    <PxTask
+      :idTask="item.id"
+      :taskText="item.task"
+      :checkBoxState="item.status"
+    />
     <div v-if="path == '/completed-task'" class="result-todo__delete">
       <font-awesome-icon icon="trash-alt" />
     </div>

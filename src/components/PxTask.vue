@@ -1,7 +1,12 @@
 <template>
   <div class="task">
     <div class="checkbox">
-      <input type="checkbox" v-model="checkBoxState" />
+      <input type="hidden" :value="idTask" class="task-id" />
+      <input
+        type="checkbox"
+        v-model="checkBoxState"
+        @change="handleUpdateTask"
+      />
       <label>
         <font-awesome-icon icon="check" />
       </label>
@@ -18,6 +23,8 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -31,6 +38,47 @@ export default {
   props: {
     taskText: String,
     checkBoxState: Boolean,
+    idTask: Number,
+  },
+  setup(props) {
+    let message = ref("");
+
+    const handleUpdateTask = async () => {
+      try {
+        const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
+
+        const config = {
+          method: "PUT",
+          body: JSON.stringify({
+            id: props.idTask,
+            task: props.taskText,
+            status: props.checkBoxState,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+
+        const response = await fetch(`${API}/${props.idTask}`, config);
+
+        // Validate status code
+        if (!response.ok) {
+          if (response.status == 404) {
+            message.value = "Error de conexion con el servicio";
+            console.error(message.value);
+          }
+        }
+        const data = await response.json();
+        console.log(`Se actualizo la tarea con el id ${props.idTask}`);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return {
+      handleUpdateTask,
+    };
   },
 };
 </script>
