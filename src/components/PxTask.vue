@@ -20,15 +20,24 @@
     >
     </span>
   </div>
+  <div
+    v-if="path == '/completed-task'"
+    @click="handleDeleteTask"
+    class="result-todo__delete"
+  >
+    <font-awesome-icon icon="trash-alt" />
+  </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, inject } from "vue";
+import { useRoute } from "vue-router";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faCheck);
+
+library.add(faCheck), faTrashAlt;
 
 export default {
   name: "PxTask",
@@ -41,8 +50,12 @@ export default {
     idTask: Number,
   },
   setup(props) {
+    const path = useRoute().path;
+    const dataTask = inject("dataTodoListState");
+    // console.log(dataTask.value);
     let message = ref("");
 
+    // Method for update task
     const handleUpdateTask = async () => {
       try {
         const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
@@ -70,7 +83,44 @@ export default {
         }
         const data = await response.json();
         console.log(`Se actualizo la tarea con el id ${props.idTask}`);
-        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    //Method for delete task
+    const handleDeleteTask = async () => {
+      try {
+        const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
+
+        const config = {
+          method: "DELETE",
+          body: JSON.stringify({
+            id: props.idTask,
+            task: props.taskText,
+            status: props.checkBoxState,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+
+        const response = await fetch(`${API}/${props.idTask}`, config);
+
+        // Validate status code
+        if (!response.ok) {
+          if (response.status == 404) {
+            message.value = "Error de conexion con el servicio";
+            console.error(message.value);
+          }
+        }
+        const data = await response.json();
+        console.log(`Se eliminó la tarea con el id ${props.idTask}`);
+
+        const newTaskListCompleted = dataTask.value.filter((task) => {
+          return task.id !== props.idTask;
+        });
+        dataTask.value = newTaskListCompleted;
       } catch (error) {
         console.log(error);
       }
@@ -78,60 +128,13 @@ export default {
 
     return {
       handleUpdateTask,
+      handleDeleteTask,
+      path,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.result-todo {
-  .task {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-family: "Montserrat-Medium";
-    font-size: 18px;
-    color: #000000;
-  }
-  &__text {
-    &.is-checked {
-      text-decoration: line-through;
-    }
-  }
-  .checkbox {
-    margin: 0 7px 0 0;
-    position: relative;
-    label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      border: 1px solid #828282;
-      padding: 0;
-      margin: 0;
-      transition: 0.3s ease all;
-      svg {
-        font-size: 14px;
-        opacity: 0;
-        color: #ffffff;
-        transition: 0.3s ease all;
-      }
-    }
-    input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      &:checked ~ label {
-        background: #2f80ed;
-        svg {
-          opacity: 1;
-        }
-      }
-    }
-  }
-}
+@import "~@/assets/sass/components/_PxTask.scss";
 </style>

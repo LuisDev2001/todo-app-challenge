@@ -5,16 +5,4 @@
     justify-content: space-between;
     margin: 0 0 27px 0;
   }
-  &__delete {
-    cursor: pointer;
-    color: #bdbdbd;
-    width: 14px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      font-size: 18px;
-    }
-  }
 }
