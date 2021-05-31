@@ -52,7 +52,6 @@ export default {
   setup(props) {
     const path = useRoute().path;
     const dataTask = inject("dataTodoListState");
-    // console.log(dataTask.value);
     let message = ref("");
 
     // Method for update task
