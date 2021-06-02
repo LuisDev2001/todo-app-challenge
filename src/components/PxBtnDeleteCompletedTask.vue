@@ -1,5 +1,13 @@
 <template>
   <div class="detele__all" v-if="dataTask.length > 0">
+    <PxAlert
+      :activeAlert="isOpen"
+      :activeSucces="success"
+      :activeInfo="info"
+      :activeError="error"
+      :activeWarn="warning"
+      :alertText="text"
+    />
     <button class="detele__all-btn" @click="handleDeleteAllTask()">
       <font-awesome-icon icon="trash-alt" />
       delete all
@@ -8,25 +16,34 @@
 </template>
 
 <script>
-import { ref, inject } from "vue";
+import { ref, inject, reactive, toRefs } from "vue";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(faTrashAlt);
 
+import PxAlert from "@/components/PxAlert";
+
 export default {
   name: "PxBtnDeleteCompletedTask",
   components: {
     FontAwesomeIcon,
+    PxAlert,
   },
   setup() {
     const dataTask = inject("dataTodoListState");
-    let message = ref("");
+    const alertState = reactive({
+      isOpen: false,
+      success: false,
+      error: false,
+      warning: false,
+      info: false,
+      text: "",
+    });
 
     const handleDeleteAllTask = async () => {
       dataTask.value.forEach(async (task) => {
-        console.log(`Se eliminaron todas las tareas ${task.id}`);
         try {
           const API = "https://api-fake-todo-app-2021.herokuapp.com/task";
 
@@ -47,24 +64,40 @@ export default {
           // Validate status code
           if (!response.ok) {
             if (response.status == 404) {
-              message.value = "Error de conexion con el servicio";
-              console.error(message.value);
+              alertState.isOpen = true;
+              alertState.error = true;
+              alertState.text = "Service connection error";
+              setTimeout(() => {
+                alertState.isOpen = false;
+                alertState.error = false;
+              }, 3000);
+              return false;
             }
           }
           const data = await response.json();
+          alertState.isOpen = true;
+          alertState.success = true;
+          alertState.text = "All tasks were deleted";
+          setTimeout(() => {
+            alertState.isOpen = false;
+            alertState.success = false;
+          }, 3000);
         } catch (error) {
           console.log(error);
         }
-      });
+      }, 3000);
       const newTaskListDeleteAll = dataTask.value.filter((task) => {
         return task.status != true;
       });
-      dataTask.value = newTaskListDeleteAll;
+      setTimeout(() => {
+        dataTask.value = newTaskListDeleteAll;
+      }, 3000);
     };
 
     return {
       handleDeleteAllTask,
       dataTask,
+      ...toRefs(alertState),
     };
   },
 };

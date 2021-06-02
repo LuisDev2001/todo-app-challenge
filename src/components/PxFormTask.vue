@@ -11,17 +11,38 @@
     <div class="form-group">
       <button type="submit">Add</button>
     </div>
+    <PxAlert
+      :activeAlert="isOpen"
+      :activeSucces="success"
+      :activeInfo="info"
+      :activeError="error"
+      :activeWarn="warning"
+      :alertText="text"
+    />
   </form>
 </template>
 
 <script>
-import { inject, ref } from "vue";
+import PxAlert from "@/components/PxAlert";
+
+import { inject, reactive, ref, toRefs } from "vue";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 export default {
   name: "PxFormTask",
-
+  components: {
+    PxAlert,
+  },
   setup(props) {
     let task = ref("");
-    let message = ref("");
+
+    const alertState = reactive({
+      isOpen: false,
+      success: false,
+      error: false,
+      warning: false,
+      info: false,
+      text: "",
+    });
 
     const dataTodo = inject("dataTodoListState");
 
@@ -45,25 +66,47 @@ export default {
           // Validate status code
           if (!response.ok) {
             if (response.status == 404) {
-              message.value = "Error de conexion con el servicio";
-              console.error(message.value);
+              alertState.isOpen = true;
+              alertState.error = true;
+              alertState.text = "Service connection error";
+              setTimeout(() => {
+                alertState.isOpen = false;
+                alertState.error = false;
+              }, 4000);
+              //Clean input task
+              task.value = "";
+              return false;
             }
           }
+
           const data = await response.json();
           dataTodo.value.push(data);
           task.value = "";
+          alertState.isOpen = true;
+          alertState.success = true;
+          alertState.text = "Task added correctly!";
+          setTimeout(() => {
+            alertState.isOpen = false;
+            alertState.success = false;
+          }, 4000);
         } catch (error) {
           console.error(error);
         }
       } else {
-        message.value = "Ingrese una tarea, porfavor";
-        console.error(message.value);
+        alertState.isOpen = true;
+        alertState.info = true;
+        alertState.text = "Enter a task, please";
+        setTimeout(() => {
+          alertState.isOpen = false;
+          alertState.info = false;
+        }, 4000);
       }
     };
 
     return {
       submitTask,
       task,
+      ...toRefs(alertState),
     };
   },
 };

@@ -19,6 +19,14 @@
       v-text="taskText"
     >
     </span>
+    <PxAlert
+      :activeAlert="isOpen"
+      :activeSucces="success"
+      :activeInfo="info"
+      :activeError="error"
+      :activeWarn="warning"
+      :alertText="text"
+    />
   </div>
   <div
     v-if="path == '/completed-task'"
@@ -30,19 +38,22 @@
 </template>
 
 <script>
-import { ref, inject } from "vue";
+import { ref, inject, toRefs, reactive } from "vue";
 import { useRoute } from "vue-router";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faCheck), faTrashAlt;
+library.add(faCheck, faTrashAlt);
+
+import PxAlert from "@/components/PxAlert";
 
 export default {
   name: "PxTask",
   components: {
     FontAwesomeIcon,
+    PxAlert,
   },
   props: {
     taskText: String,
@@ -52,7 +63,15 @@ export default {
   setup(props) {
     const path = useRoute().path;
     const dataTask = inject("dataTodoListState");
-    let message = ref("");
+
+    const alertState = reactive({
+      isOpen: false,
+      success: false,
+      error: false,
+      warning: false,
+      info: false,
+      text: "",
+    });
 
     // Method for update task
     const handleUpdateTask = async () => {
@@ -76,12 +95,24 @@ export default {
         // Validate status code
         if (!response.ok) {
           if (response.status == 404) {
-            message.value = "Error de conexion con el servicio";
-            console.error(message.value);
+            alertState.isOpen = true;
+            alertState.error = true;
+            alertState.text = "Service connection error";
+            setTimeout(() => {
+              alertState.isOpen = false;
+              alertState.error = false;
+            }, 3000);
+            return false;
           }
         }
         const data = await response.json();
-        console.log(`Se actualizo la tarea con el id ${props.idTask}`);
+        alertState.isOpen = true;
+        alertState.success = true;
+        alertState.text = "Task updated successfully";
+        setTimeout(() => {
+          alertState.isOpen = false;
+          alertState.success = false;
+        }, 3000);
       } catch (error) {
         console.log(error);
       }
@@ -109,17 +140,32 @@ export default {
         // Validate status code
         if (!response.ok) {
           if (response.status == 404) {
-            message.value = "Error de conexion con el servicio";
-            console.error(message.value);
+            alertState.isOpen = true;
+            alertState.error = true;
+            alertState.text = "Service connection error";
+            setTimeout(() => {
+              alertState.isOpen = false;
+              alertState.error = false;
+            }, 3000);
+            return false;
           }
         }
+
         const data = await response.json();
-        console.log(`Se eliminó la tarea con el id ${props.idTask}`);
+        alertState.isOpen = true;
+        alertState.success = true;
+        alertState.text = "Task deleted successfully";
+        setTimeout(() => {
+          alertState.isOpen = false;
+          alertState.success = false;
+        }, 3000);
 
         const newTaskListCompleted = dataTask.value.filter((task) => {
           return task.id !== props.idTask;
         });
-        dataTask.value = newTaskListCompleted;
+        setTimeout(() => {
+          dataTask.value = newTaskListCompleted;
+        }, 2000);
       } catch (error) {
         console.log(error);
       }
@@ -129,6 +175,7 @@ export default {
       handleUpdateTask,
       handleDeleteTask,
       path,
+      ...toRefs(alertState),
     };
   },
 };

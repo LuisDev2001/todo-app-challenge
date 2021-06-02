@@ -1,0 +1,47 @@
+.alert {
+  padding: 20px 15px;
+  border-radius: 6px;
+  border: 1px solid;
+  width: auto;
+  height: auto;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 50;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  transform: translateX(200%);
+  transition: 1.4s ease all;
+  &.is-open {
+    transform: translateX(0%);
+  }
+  &__icon {
+    margin: 0 10px 0 0;
+  }
+  &__text {
+    font-size: 13px;
+    font-family: "Montserrat-Bold";
+  }
+  //Type alerts
+  &.alert__succes {
+    border-color: #8edeac;
+    background-color: #e7f9f1;
+    color: #27be5b;
+  }
+  &.alert__error {
+    border-color: #e19b9e;
+    background-color: #faeded;
+    color: #d04f54;
+  }
+  &.alert__warning {
+    border-color: #dec271;
+    background-color: #fff8e3;
+    color: #cc9904;
+  }
+  &.alert__info {
+    border-color: #6e98cd;
+    background-color: #ebf1f8;
+    color: #467cbf;
+  }
+}
