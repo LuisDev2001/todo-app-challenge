@@ -52,6 +52,8 @@ export default {
   &-text {
     font-size: 22px;
     margin: 10px 0 0;
+    text-align: center;
+    line-height: 32px;
   }
 }
 </style>

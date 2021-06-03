@@ -108,7 +108,7 @@ export default {
 .detele__all {
   width: 100%;
   text-align: right;
-  margin: 32px 0 0 0;
+  margin: 12px 0 0 0;
   &-btn {
     width: 124px;
     height: 40px;
