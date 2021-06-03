@@ -82,16 +82,17 @@ export default {
             alertState.isOpen = false;
             alertState.success = false;
           }, 3000);
+
+          const newTaskListDeleteAll = dataTask.value.filter((task) => {
+            return task.status != true;
+          });
+          setTimeout(() => {
+            dataTask.value = newTaskListDeleteAll;
+          }, 2000);
         } catch (error) {
           console.log(error);
         }
-      }, 3000);
-      const newTaskListDeleteAll = dataTask.value.filter((task) => {
-        return task.status != true;
       });
-      setTimeout(() => {
-        dataTask.value = newTaskListDeleteAll;
-      }, 3000);
     };
 
     return {
