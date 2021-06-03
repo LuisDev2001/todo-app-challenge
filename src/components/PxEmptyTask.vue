@@ -27,7 +27,9 @@ export default {
     active: Boolean,
   },
   setup() {
-    const message = ref("No hay tareas, ingrese tareas al app todo list😁.");
+    const message = ref(
+      "There are no tasks, enter tasks to the todo list app😁."
+    );
 
     return {
       message,
