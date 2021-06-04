@@ -1,7 +1,12 @@
 <template>
   <h1 class="main-title">#todo</h1>
   <PxHeader />
-  <router-view />
+
+  <router-view v-slot="{ Component }">
+    <transition name="mode-fade" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script>
